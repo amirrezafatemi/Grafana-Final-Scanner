@@ -3469,12 +3469,12 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=f'''
 {Colors.BOLD}USAGE EXAMPLES:{Colors.RESET}
-  {sys.argv[0]} -u https://grafana.target.com
-  {sys.argv[0]} -f targets.txt -o report
-  {sys.argv[0]} -u https://grafana.target.com --no-ssl-verify -v
-  {sys.argv[0]} --auto-search urls.txt -o discovery_report
-  {sys.argv[0]} -f targets.txt --db vulndb.json
-  {sys.argv[0]} --serve --db vulndb.json
+  python {sys.argv[0]} -u https://grafana.target.com
+  python {sys.argv[0]} -f targets.txt -o report
+  python {sys.argv[0]} -u https://grafana.target.com --no-ssl-verify -v
+  python {sys.argv[0]} --auto-search urls.txt -o discovery_report
+  python {sys.argv[0]} -f targets.txt --db vulndb.json
+  python {sys.argv[0]} --serve --db vulndb.json
 
 {Colors.BOLD}NEW FEATURES:{Colors.RESET}
   --auto-search FILE    Auto-detect Grafana instances from file containing mixed URLs
