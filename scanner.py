@@ -2546,166 +2546,549 @@ def create_web_server(scanner: GrafanaFinalScanner, host: str = '127.0.0.1', por
         <html lang="en">
         <head>
             <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Grafana Scanner - Dashboard</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+            <title>🛡️ Grafana Scanner - Dashboard</title>
             <style>
-                * { margin: 0; padding: 0; box-sizing: border-box; }
-                body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0a14; color: #e0e0e0; }
-                .navbar { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 15px 30px; display: flex; align-items: center; gap: 20px; border-bottom: 1px solid #2a2a4a; }
-                .navbar h1 { color: #ff4444; font-size: 20px; }
-                .navbar .nav-links { display: flex; gap: 15px; }
-                .navbar a { color: #888; text-decoration: none; padding: 5px 12px; border-radius: 5px; }
-                .navbar a:hover, .navbar a.active { background: #2a2a4a; color: #fff; }
-                .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
-                .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
-                .stat-card { background: #1a1a2e; padding: 20px; border-radius: 8px; text-align: center; border: 1px solid #2a2a4a; }
-                .stat-card h3 { font-size: 14px; color: #888; margin-bottom: 10px; }
-                .stat-card .value { font-size: 28px; font-weight: bold; }
-                .card-danger { color: #dc3545; }
-                .card-warning { color: #fd7e14; }
-                .card-safe { color: #28a745; }
-                .card-info { color: #0dcaf0; }
-                h2 { color: #ccc; margin: 20px 0; font-size: 18px; }
-                table { width: 100%; border-collapse: collapse; background: #1a1a2e; border-radius: 8px; overflow: hidden; border: 1px solid #2a2a4a; margin-bottom: 20px; }
-                th, td { padding: 10px 15px; text-align: left; border-bottom: 1px solid #2a2a4a; }
-                th { background: #16213e; color: #888; font-size: 12px; text-transform: uppercase; }
-                tr:hover { background: #1f1f35; }
-                .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; color: #000; }
-                .severity-critical { background: #dc3545; }
-                .severity-high { background: #fd7e14; }
-                .severity-medium { background: #ffc107; }
-                .severity-low { background: #0dcaf0; }
-                .status-open { color: #dc3545; }
-                .status-fixed { color: #28a745; }
-                .status-false_positive { color: #ffc107; }
-                a { color: #0dcaf0; text-decoration: none; }
-                a:hover { text-decoration: underline; }
-                .risk-bar { height: 6px; border-radius: 3px; background: #2a2a4a; margin-top: 5px; }
-                .risk-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
-                .risk-high { background: linear-gradient(90deg, #dc3545, #ff4444); }
-                .risk-medium { background: linear-gradient(90deg, #fd7e14, #ffc107); }
-                .risk-low { background: linear-gradient(90deg, #0dcaf0, #28a745); }
-                .actions { display: flex; gap: 5px; }
-                .btn { padding: 3px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; }
-                .btn-fix { background: #28a745; color: #fff; }
-                .btn-fp { background: #ffc107; color: #000; }
-                .btn-view { background: #0dcaf0; color: #000; }
-                .empty-state { text-align: center; padding: 40px; color: #555; }
-                .empty-state h3 { font-size: 18px; margin-bottom: 10px; }
-                .timestamp { color: #555; font-size: 11px; }
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+        
+                body {
+                    background: radial-gradient(circle at 10% 20%, #0c0c18, #070710);
+                    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, 'SF Pro Text', 'Roboto', sans-serif;
+                    color: #eef2ff;
+                    line-height: 1.5;
+                    padding-bottom: 2rem;
+                }
+        
+                ::-webkit-scrollbar {
+                    width: 8px;
+                    height: 8px;
+                }
+                ::-webkit-scrollbar-track {
+                    background: #1e1e2c;
+                    border-radius: 10px;
+                }
+                ::-webkit-scrollbar-thumb {
+                    background: #4a4a6a;
+                    border-radius: 10px;
+                }
+                ::-webkit-scrollbar-thumb:hover {
+                    background: #6c6c96;
+                }
+        
+                .navbar {
+                    background: rgba(18, 18, 30, 0.85);
+                    backdrop-filter: blur(10px);
+                    padding: 0.9rem 2rem;
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    gap: 1.2rem;
+                    border-bottom: 1px solid rgba(88, 88, 140, 0.3);
+                    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+                }
+                .navbar h1 {
+                    font-size: 1.65rem;
+                    font-weight: 700;
+                    background: linear-gradient(130deg, #ff7b7b, #ff3a3a);
+                    background-clip: text;
+                    -webkit-background-clip: text;
+                    color: transparent;
+                    letter-spacing: -0.3px;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+                .navbar .nav-links {
+                    display: flex;
+                    gap: 0.3rem;
+                    flex-wrap: wrap;
+                }
+                .navbar a {
+                    color: #b9c3e6;
+                    text-decoration: none;
+                    padding: 8px 16px;
+                    border-radius: 40px;
+                    font-weight: 500;
+                    transition: all 0.2s ease;
+                    font-size: 0.9rem;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                }
+                .navbar a:hover, .navbar a.active {
+                    background: #2e2a4a;
+                    color: #ffffff;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                }
+                .navbar a.active {
+                    background: #3c2e5e;
+                    border: 1px solid #a970ff50;
+                }
+        
+                .container {
+                    max-width: 1400px;
+                    margin: 1.8rem auto 0 auto;
+                    padding: 0 1.8rem;
+                }
+        
+                .stats-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+                    gap: 1.5rem;
+                    margin-bottom: 2.5rem;
+                }
+                .stat-card {
+                    background: rgba(22, 22, 38, 0.75);
+                    backdrop-filter: blur(4px);
+                    border-radius: 28px;
+                    padding: 1.3rem 1rem;
+                    text-align: center;
+                    border: 1px solid rgba(100, 100, 150, 0.25);
+                    box-shadow: 0 10px 20px -8px rgba(0,0,0,0.4);
+                    transition: transform 0.2s ease, border-color 0.2s;
+                }
+                .stat-card:hover {
+                    transform: translateY(-3px);
+                    border-color: #ff6b6b70;
+                    background: rgba(28, 28, 48, 0.85);
+                }
+                .stat-card h3 {
+                    font-size: 0.9rem;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    font-weight: 500;
+                    color: #b4c0ff;
+                    margin-bottom: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                }
+                .stat-card .value {
+                    font-size: 2.6rem;
+                    font-weight: 800;
+                    line-height: 1.1;
+                }
+                .card-danger { color: #ff6e7f; text-shadow: 0 0 6px rgba(255,60,60,0.3); }
+                .card-warning { color: #f9b43a; text-shadow: 0 0 4px #f9b43a40; }
+                .card-safe { color: #6cd97b; text-shadow: 0 0 5px #2ea84630; }
+                .card-info { color: #6fcbff; text-shadow: 0 0 5px #3c9eff30; }
+        
+                .section-title {
+                    font-size: 1.6rem;
+                    font-weight: 600;
+                    margin: 2rem 0 1rem 0;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    border-left: 5px solid #ff6a5c;
+                    padding-left: 1rem;
+                }
+                .subhead {
+                    color: #9ba7df;
+                    margin: -0.8rem 0 1.5rem 0;
+                    font-size: 0.9rem;
+                }
+        
+                .table-wrapper {
+                    overflow-x: auto;
+                    border-radius: 20px;
+                    background: #11121e;
+                    border: 1px solid #2a2b40;
+                    margin-bottom: 2rem;
+                    box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-size: 0.9rem;
+                }
+                th {
+                    text-align: left;
+                    padding: 14px 16px;
+                    background: #16172b;
+                    color: #cdd6ff;
+                    font-weight: 600;
+                    font-size: 0.8rem;
+                    letter-spacing: 0.5px;
+                    text-transform: uppercase;
+                    border-bottom: 1px solid #2f314e;
+                }
+                td {
+                    padding: 12px 16px;
+                    border-bottom: 1px solid #23243e;
+                    vertical-align: middle;
+                }
+                tr:last-child td {
+                    border-bottom: none;
+                }
+                tr:hover td {
+                    background: #1c1d36;
+                    transition: 0.1s;
+                }
+        
+                .badge {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 4px 12px;
+                    border-radius: 40px;
+                    font-size: 0.7rem;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 0.4px;
+                    background: #1e1f38;
+                    color: white;
+                }
+                .severity-critical { background: #bc2f3e; box-shadow: 0 0 6px #ff4d6d; }
+                .severity-high { background: #e67e22; }
+                .severity-medium { background: #e9b741; color: #1f1f2a; }
+                .severity-low { background: #3c91e6; }
+        
+                .status-badge {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                }
+                .status-open { color: #ff7676; font-weight: 600; }
+                .status-fixed { color: #6fcf97; }
+                
+                .actions {
+                    display: flex;
+                    gap: 8px;
+                    flex-wrap: wrap;
+                }
+                .btn {
+                    padding: 6px 12px;
+                    border: none;
+                    border-radius: 40px;
+                    font-size: 0.7rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: 0.15s;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    background: #2a2c48;
+                    color: #f0f3ff;
+                }
+                .btn-fix {
+                    background: #2b7a3e;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+                }
+                .btn-fix:hover { background: #3e9a57; transform: scale(0.96); }
+                .btn-fp {
+                    background: #b9772e;
+                }
+                .btn-fp:hover { background: #da9246; transform: scale(0.96); }
+        
+                .risk-meta {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+                .risk-bar {
+                    flex: 1;
+                    height: 8px;
+                    background: #292b48;
+                    border-radius: 20px;
+                    overflow: hidden;
+                }
+                .risk-fill {
+                    height: 100%;
+                    border-radius: 20px;
+                    transition: width 0.2s ease;
+                }
+                .risk-high { background: linear-gradient(90deg, #ff5e6e, #ff2e4a); }
+                .risk-medium { background: linear-gradient(90deg, #fd9e4a, #ffbc6e); }
+                .risk-low { background: linear-gradient(90deg, #50cc8a, #8effbc); }
+        
+                .empty-state {
+                    text-align: center;
+                    padding: 3rem 1.5rem;
+                    background: #10111e;
+                    border-radius: 32px;
+                    margin: 1rem 0;
+                    border: 1px dashed #4a4d74;
+                }
+                .empty-state h3 {
+                    font-size: 1.4rem;
+                    margin-bottom: 8px;
+                }
+                .empty-state p {
+                    color: #96a0d0;
+                }
+        
+                .dist-row {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 12px;
+                    flex-wrap: wrap;
+                }
+                .dist-bar-container {
+                    flex: 2;
+                    height: 12px;
+                    background: #252741;
+                    border-radius: 40px;
+                    overflow: hidden;
+                }
+                .dist-bar-fill {
+                    height: 100%;
+                    width: 0%;
+                    border-radius: 40px;
+                }
+        
+                .timestamp {
+                    text-align: right;
+                    margin-top: 2rem;
+                    font-size: 0.7rem;
+                    color: #6b6f9e;
+                    border-top: 1px solid #2d2f50;
+                    padding-top: 1rem;
+                }
+        
+                .insight-message {
+                    background: #1d1e30;
+                    border-radius: 28px;
+                    padding: 0.8rem 1.5rem;
+                    margin-bottom: 2rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    border-left: 6px solid #ff9f4a;
+                    font-size: 0.9rem;
+                }
+                .footnote {
+                    text-align: center;
+                    font-size: 0.7rem;
+                    margin-top: 2rem;
+                    color: #5b5e8a;
+                }
+                a {
+                    color: #8eaeff;
+                    text-decoration: none;
+                }
+                a:hover {
+                    text-decoration: underline;
+                    color: #b7ceff;
+                }
+                code {
+                    background: #00000040;
+                    padding: 2px 8px;
+                    border-radius: 30px;
+                    font-size: 0.8rem;
+                }
+                @media (max-width: 700px) {
+                    .container { padding: 0 1rem; }
+                    .stat-card .value { font-size: 2rem; }
+                    .navbar h1 { font-size: 1.3rem; }
+                }
             </style>
         </head>
         <body>
-            <div class="navbar">
-                <h1>🔍 Grafana Scanner</h1>
-                <div class="nav-links">
-                    <a href="/" class="active">Dashboard</a>
-                    <a href="/targets">Targets</a>
-                    <a href="/vulnerabilities">Vulnerabilities</a>
+        
+        <div class="navbar">
+            <h1>
+                <span>🛡️</span> Grafana Scanner
+            </h1>
+            <div class="nav-links">
+                <a href="/" class="active">📊 Dashboard</a>
+                <a href="/targets">🎯 Targets</a>
+                <a href="/vulnerabilities">⚠️ Vulns DB</a>
+            </div>
+            <div style="margin-left: auto; font-size: 0.8rem; opacity: 0.7;">👋 hey, security hero</div>
+        </div>
+        
+        <div class="container">
+            {% set open_vulns = stats.get('open_vulnerabilities', 0) %}
+            <div class="insight-message">
+                <span>🧠</span>
+                {% if open_vulns == 0 %}
+                    ✨ All clear! No open vulnerabilities — you're a legend. Keep scanning!
+                {% elif open_vulns < 3 %}
+                    🧹 A few issues found – good time to patch them before they grow.
+                {% else %}
+                    🚨 Heads up! {{ open_vulns }} unresolved vulnerabilities need attention.
+                {% endif %}
+            </div>
+        
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>📡 TRACKED TARGETS</h3>
+                    <div class="value card-info">{{ stats.get('total_targets', 0) }}</div>
+                    <div style="font-size: 12px; margin-top: 8px;">🌐 monitored assets</div>
+                </div>
+                <div class="stat-card">
+                    <h3>⚠️ OPEN VULNS</h3>
+                    <div class="value card-danger">{{ stats.get('open_vulnerabilities', 0) }}</div>
+                    <div style="font-size: 12px;">🔓 need fixing asap</div>
+                </div>
+                <div class="stat-card">
+                    <h3>🔄 SCANS PERFORMED</h3>
+                    <div class="value card-safe">{{ stats.get('total_scans', 0) }}</div>
+                    <div style="font-size: 12px;">🛠️ total health checks</div>
+                </div>
+                <div class="stat-card">
+                    <h3>🎯 TARGETS AT RISK</h3>
+                    <div class="value card-warning">{{ stats.get('targets_at_risk', 0) }}</div>
+                    <div style="font-size: 12px;">🔥 high risk exposure</div>
                 </div>
             </div>
-            <div class="container">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3>Targets Tracked</h3>
-                        <div class="value card-info">{{ stats.get('total_targets', 0) }}</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Open Vulnerabilities</h3>
-                        <div class="value card-danger">{{ stats.get('open_vulnerabilities', 0) }}</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Scans Performed</h3>
-                        <div class="value card-safe">{{ stats.get('total_scans', 0) }}</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Targets at Risk</h3>
-                        <div class="value card-warning">{{ stats.get('targets_at_risk', 0) }}</div>
-                    </div>
-                </div>
-                
-                <h2>⚠️ Critical Vulnerabilities</h2>
-                {% set critical = stats.get('by_severity', {}).get('CRITICAL', 0) %}
-                {% if critical > 0 %}
+        
+            <div class="section-title">
+                <span>🚨💀</span> Critical vulnerabilities
+                <span style="font-size: 0.8rem; background: #2a1c2e; padding: 2px 12px; border-radius: 30px;">{{ stats.get('by_severity', {}).get('CRITICAL', 0) }} active</span>
+            </div>
+            <div class="subhead">🔔 These can lead to full compromise — patch immediately!</div>
+            
+            {% set critical_list = [] %}
+            {% for v in vulns if v.get('severity') == 'CRITICAL' %}
+                {% set _ = critical_list.append(v) %}
+            {% endfor %}
+            
+            {% if critical_list %}
+            <div class="table-wrapper">
                 <table>
-                    <thead><tr><th>Target</th><th>CVE ID</th><th>Severity</th><th>Message</th><th>Actions</th></tr></thead>
+                    <thead>
+                        <tr><th>🎯 Target</th><th>🔖 CVE ID</th><th>💥 Severity</th><th>📝 Issue snippet</th><th>🔧 Actions</th></tr>
+                    </thead>
                     <tbody>
-                    {% for v in vulns if v.get('severity') == 'CRITICAL' %}
-                    <tr>
-                        <td><a href="/targets?url={{ v.get('target_url', '') | urlencode }}">{{ v.get('target_url', '')[:50] }}...</a></td>
-                        <td><code>{{ v.get('cve_id', '') }}</code></td>
-                        <td><span class="badge severity-critical">CRITICAL</span></td>
-                        <td>{{ v.get('message', '')[:60] }}...</td>
-                        <td>
-                            <button class="btn btn-fix" onclick="updateStatus('{{ v.get('id', '') }}', 'fixed')">✓ Fixed</button>
-                            <button class="btn btn-fp" onclick="updateStatus('{{ v.get('id', '') }}', 'false_positive')">FP</button>
-                        </td>
-                    </tr>
-                    {% endfor %}
+                        {% for v in vulns if v.get('severity') == 'CRITICAL' %}
+                        <tr>
+                            <td><a href="/targets?url={{ v.get('target_url', '') | urlencode }}">🌐 {{ v.get('target_url', '')[:45] }}{% if v.get('target_url', '')|length > 45 %}..{% endif %}</a></td>
+                            <td><code>{{ v.get('cve_id', 'N/A') }}</code></td>
+                            <td><span class="badge severity-critical">🔥 CRITICAL</span></td>
+                            <td style="max-width: 280px;">{{ v.get('message', '')[:65] }}{% if v.get('message', '')|length > 65 %}…{% endif %}</td>
+                            <td class="actions">
+                                <button class="btn btn-fix" onclick="updateStatus('{{ v.get('id', '') }}', 'fixed')">✅ Mark Fixed</button>
+                                <button class="btn btn-fp" onclick="updateStatus('{{ v.get('id', '') }}', 'false_positive')">❌ False Positive</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
-                {% else %}
-                <div class="empty-state">
-                    <h3>✅ No critical vulnerabilities</h3>
-                    <p>All tracked vulnerabilities have been addressed or are lower severity.</p>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <h3>🎉🌈 No critical vulnerabilities!</h3>
+                <p>Your most dangerous paths are secure — but keep an eye on high/medium issues.</p>
+            </div>
+            {% endif %}
+        
+            <div class="section-title">
+                <span>📊🧩</span> Vulnerability breakdown
+                <span style="font-size: 0.75rem;">severity × count</span>
+            </div>
+            {% set severities = {'CRITICAL': '🔴 Critical', 'HIGH': '🟠 High', 'MEDIUM': '🟡 Medium', 'LOW': '🔵 Low'} %}
+            {% set severity_colors = {'CRITICAL': '#e34d5e', 'HIGH': '#f39c12', 'MEDIUM': '#f4d03f', 'LOW': '#5dade2'} %}
+            {% set total_vulns = stats.get('by_severity', {}).get('CRITICAL', 0) + stats.get('by_severity', {}).get('HIGH', 0) + stats.get('by_severity', {}).get('MEDIUM', 0) + stats.get('by_severity', {}).get('LOW', 0) %}
+            
+            <div style="background: #131424; border-radius: 28px; padding: 1.2rem 1.5rem; margin-bottom: 2rem; border: 1px solid #2e2f50;">
+                {% for sev_key, sev_name in severities.items() %}
+                {% set count = stats.get('by_severity', {}).get(sev_key, 0) %}
+                {% set bar_width = (count / total_vulns * 100) if total_vulns > 0 else 0 %}
+                <div style="margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                        <span style="font-weight: 500;">{{ sev_name }} <span style="font-size:0.75rem;">({{ count }})</span></span>
+                        <span>{{ "%.0f"|format(bar_width) }}%</span>
+                    </div>
+                    <div class="dist-bar-container">
+                        <div class="dist-bar-fill" style="width: {{ bar_width }}%; background: {{ severity_colors[sev_key] }}; box-shadow: 0 0 4px {{ severity_colors[sev_key] }};"></div>
+                    </div>
                 </div>
-                {% endif %}
-                
-                <h2>📊 Vulnerability Distribution</h2>
+                {% endfor %}
+                <div style="margin-top: 12px; font-size: 0.7rem; text-align: center; color: #acaee6;">📌 total findings: {{ total_vulns }}</div>
+            </div>
+        
+            <div class="section-title">
+                <span>🎯📡</span> Recent targets & risk profile
+                <span style="font-size:0.7rem;">🔍 last monitored assets</span>
+            </div>
+            {% if targets %}
+            <div class="table-wrapper">
                 <table>
-                    <thead><tr><th>Severity</th><th>Count</th></tr></thead>
+                    <thead>
+                        <tr><th>🌍 Target URL</th><th>📦 Grafana ver</th><th>🔁 Scans</th><th>⚠️ Open Vulns</th><th>📈 Risk score</th></tr>
+                    </thead>
                     <tbody>
-                        <tr><td><span class="badge severity-critical">CRITICAL</span></td><td>{{ stats.get('by_severity', {}).get('CRITICAL', 0) }}</td></tr>
-                        <tr><td><span class="badge severity-high">HIGH</span></td><td>{{ stats.get('by_severity', {}).get('HIGH', 0) }}</td></tr>
-                        <tr><td><span class="badge severity-medium">MEDIUM</span></td><td>{{ stats.get('by_severity', {}).get('MEDIUM', 0) }}</td></tr>
-                        <tr><td><span class="badge severity-low">LOW</span></td><td>{{ stats.get('by_severity', {}).get('LOW', 0) }}</td></tr>
-                    </tbody>
-                </table>
-                
-                <h2>🎯 Recent Targets</h2>
-                {% if targets %}
-                <table>
-                    <thead><tr><th>URL</th><th>Version</th><th>Scans</th><th>Open Vulns</th><th>Risk Score</th></tr></thead>
-                    <tbody>
-                    {% for t in targets[:10] %}
-                    <tr>
-                        <td><a href="/targets?url={{ t.get('url', '') | urlencode }}">{{ t.get('url', '')[:60] }}...</a></td>
-                        <td>{% if t.get('version') %}v{{ t.get('version') }}{% else %}-{% endif %}</td>
-                        <td>{{ t.get('scan_count', 0) }}</td>
-                        <td>{{ t.get('total_vulnerabilities', 0) }}</td>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <span>{{ t.get('risk_score', 0) }}/100</span>
-                                <div class="risk-bar" style="flex: 1;">
-                                    {% set score = t.get('risk_score', 0) %}
-                                    <div class="risk-fill {% if score >= 50 %}risk-high{% elif score >= 20 %}risk-medium{% else %}risk-low{% endif %}" style="width: {{ score }}%;"></div>
+                        {% for t in targets[:10] %}
+                        <tr>
+                            <td><a href="/targets?url={{ t.get('url', '') | urlencode }}">🗺️ {{ t.get('url', '')[:55] }}{% if t.get('url', '')|length > 55 %}..{% endif %}</a></td>
+                            <td>{% if t.get('version') %}📌 v{{ t.get('version') }}{% else %}❓ unknown{% endif %}</td>
+                            <td>{{ t.get('scan_count', 0) }} 🧪</td>
+                            <td class="{% if t.get('total_vulnerabilities',0) > 0 %}status-open{% endif %}">{{ t.get('total_vulnerabilities', 0) }} {% if t.get('total_vulnerabilities',0) > 0 %}🔥{% else %}✅{% endif %}</td>
+                            <td>
+                                <div class="risk-meta">
+                                    <span style="min-width: 45px; font-weight:600;">{{ t.get('risk_score', 0) }}</span>
+                                    <div class="risk-bar">
+                                        {% set score = t.get('risk_score', 0) %}
+                                        <div class="risk-fill {% if score >= 50 %}risk-high{% elif score >= 20 %}risk-medium{% else %}risk-low{% endif %}" style="width: {{ score }}%;"></div>
+                                    </div>
+                                    <span style="font-size:0.7rem;">
+                                        {% if score >= 70 %}⚠️ critical risk
+                                        {% elif score >= 40 %}🧨 notable risk
+                                        {% elif score >= 15 %}⚡ moderate
+                                        {% else %}🍃 low risk
+                                        {% endif %}
+                                    </span>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
-                {% else %}
-                <div class="empty-state">
-                    <h3>No targets yet</h3>
-                    <p>Run a scan with `--db vulndb.json` to start tracking targets.</p>
-                </div>
-                {% endif %}
-                
-                <div class="timestamp">Last updated: {{ now }}</div>
             </div>
-            <script>
+            {% else %}
+            <div class="empty-state">
+                <h3>📭 No targets in radar yet</h3>
+                <p>Run a scan with <code>--db vulndb.json</code> and start monitoring your Grafana instances ✨</p>
+            </div>
+            {% endif %}
+        
+            <div class="insight-message" style="background: #16172a; border-left-color: #5e8aff;">
+                <span>🤝💬</span>
+                <div><strong>Pro tip:</strong> fixing critical flaws? Use the ✅ “Mark Fixed” button to clean your dashboard. Triage false positives with ❌ FP – keep your data actionable. Stay sharp!</div>
+            </div>
+        
+            <div class="timestamp">
+                🕒 Last sync: {{ now }} &nbsp;|&nbsp; 🧙‍♀️ security snapshot
+            </div>
+            <div class="footnote">
+                💙 made for defenders — every patch makes the ecosystem safer
+            </div>
+        </div>
+        
+        <script>
             function updateStatus(vulnId, status) {
+                if (!vulnId) {
+                    console.warn("no vuln id provided");
+                    return;
+                }
                 fetch('/api/vulnerabilities/' + vulnId + '/status', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({status: status})
-                }).then(r => r.json()).then(d => {
-                    if(d.success) location.reload();
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: status })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.success) {
+                        location.reload();
+                    } else {
+                        console.log("Status update didn't succeed but reloading anyway");
+                        location.reload();
+                    }
+                })
+                .catch(err => {
+                    console.error("API error", err);
+                    setTimeout(() => location.reload(), 800);
                 });
             }
-            </script>
+        </script>
         </body>
         </html>
         ''', stats=stats, targets=targets, vulns=vulns, now=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
@@ -2715,81 +3098,121 @@ def create_web_server(scanner: GrafanaFinalScanner, host: str = '127.0.0.1', por
         """Target management page"""
         targets = scanner.vulndb.get_all_targets() if scanner.vulndb else []
         return render_template_string('''
-        <!DOCTYPE html>
+                <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Grafana Scanner - Targets</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+            <title>🎯 Grafana Scanner - Managed Targets</title>
             <style>
                 * { margin: 0; padding: 0; box-sizing: border-box; }
-                body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0a14; color: #e0e0e0; }
-                .navbar { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 15px 30px; display: flex; align-items: center; gap: 20px; border-bottom: 1px solid #2a2a4a; }
-                .navbar h1 { color: #ff4444; font-size: 20px; }
-                .navbar a { color: #888; text-decoration: none; padding: 5px 12px; border-radius: 5px; }
-                .navbar a:hover, .navbar a.active { background: #2a2a4a; color: #fff; }
-                .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
-                h2 { color: #ccc; margin: 20px 0; font-size: 18px; }
-                table { width: 100%; border-collapse: collapse; background: #1a1a2e; border-radius: 8px; overflow: hidden; border: 1px solid #2a2a4a; }
-                th, td { padding: 10px 15px; text-align: left; border-bottom: 1px solid #2a2a4a; }
-                th { background: #16213e; color: #888; font-size: 12px; text-transform: uppercase; }
-                tr:hover { background: #1f1f35; }
-                a { color: #0dcaf0; text-decoration: none; }
-                a:hover { text-decoration: underline; }
-                .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; color: #000; }
-                .risk-bar { height: 6px; border-radius: 3px; background: #2a2a4a; margin-top: 5px; }
-                .risk-fill { height: 100%; border-radius: 3px; }
-                .risk-high { background: linear-gradient(90deg, #dc3545, #ff4444); }
-                .risk-medium { background: linear-gradient(90deg, #fd7e14, #ffc107); }
-                .risk-low { background: linear-gradient(90deg, #0dcaf0, #28a745); }
-                .empty-state { text-align: center; padding: 40px; color: #555; }
+                body { background: radial-gradient(circle at 10% 20%, #0c0c18, #070710); font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, 'SF Pro Text', 'Roboto', sans-serif; color: #eef2ff; line-height: 1.5; padding-bottom: 2rem; }
+                ::-webkit-scrollbar { width: 8px; height: 8px; }
+                ::-webkit-scrollbar-track { background: #1e1e2c; border-radius: 10px; }
+                ::-webkit-scrollbar-thumb { background: #4a4a6a; border-radius: 10px; }
+                ::-webkit-scrollbar-thumb:hover { background: #6c6c96; }
+                .navbar { background: rgba(18, 18, 30, 0.85); backdrop-filter: blur(10px); padding: 0.9rem 2rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; border-bottom: 1px solid rgba(88, 88, 140, 0.3); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+                .navbar h1 { font-size: 1.65rem; font-weight: 700; background: linear-gradient(130deg, #ff7b7b, #ff3a3a); background-clip: text; -webkit-background-clip: text; color: transparent; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px; }
+                .navbar a { color: #b9c3e6; text-decoration: none; padding: 8px 16px; border-radius: 40px; font-weight: 500; transition: all 0.2s ease; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; }
+                .navbar a:hover, .navbar a.active { background: #2e2a4a; color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+                .navbar a.active { background: #3c2e5e; border: 1px solid #a970ff50; }
+                .container { max-width: 1400px; margin: 1.8rem auto 0 auto; padding: 0 1.8rem; }
+                .section-title { font-size: 1.6rem; font-weight: 600; margin: 1rem 0 1.2rem 0; display: flex; align-items: center; gap: 12px; border-left: 5px solid #ff6a5c; padding-left: 1rem; }
+                .subhead { color: #9ba7df; margin: -0.5rem 0 1.5rem 0; font-size: 0.9rem; }
+                .table-wrapper { overflow-x: auto; border-radius: 20px; background: #11121e; border: 1px solid #2a2b40; margin-bottom: 2rem; box-shadow: 0 6px 14px rgba(0,0,0,0.3); }
+                table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+                th { text-align: left; padding: 14px 16px; background: #16172b; color: #cdd6ff; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 1px solid #2f314e; }
+                td { padding: 12px 16px; border-bottom: 1px solid #23243e; vertical-align: middle; }
+                tr:last-child td { border-bottom: none; }
+                tr:hover td { background: #1c1d36; transition: 0.1s; }
+                .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 40px; font-size: 0.65rem; font-weight: 700; background: #1e1f38; color: white; margin-left: 6px; }
+                .badge-critical { background: #bc2f3e; }
+                .badge-high { background: #e67e22; }
+                .risk-bar { height: 8px; border-radius: 20px; background: #292b48; overflow: hidden; flex: 1; }
+                .risk-fill { height: 100%; border-radius: 20px; transition: width 0.2s ease; }
+                .risk-high { background: linear-gradient(90deg, #ff5e6e, #ff2e4a); }
+                .risk-medium { background: linear-gradient(90deg, #fd9e4a, #ffbc6e); }
+                .risk-low { background: linear-gradient(90deg, #50cc8a, #8effbc); }
+                .empty-state { text-align: center; padding: 3rem 1.5rem; background: #10111e; border-radius: 32px; margin: 1rem 0; border: 1px dashed #4a4d74; }
+                .empty-state h3 { font-size: 1.4rem; margin-bottom: 8px; }
+                .empty-state p { color: #96a0d0; }
+                a { color: #8eaeff; text-decoration: none; }
+                a:hover { text-decoration: underline; color: #b7ceff; }
+                code { background: #00000040; padding: 2px 8px; border-radius: 30px; font-size: 0.8rem; }
+                .risk-meta { display: flex; align-items: center; gap: 10px; }
+                .insight-message { background: #1d1e30; border-radius: 28px; padding: 0.8rem 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 12px; border-left: 6px solid #ff9f4a; font-size: 0.9rem; }
+                @media (max-width: 700px) { .container { padding: 0 1rem; } .navbar h1 { font-size: 1.3rem; } }
             </style>
         </head>
         <body>
             <div class="navbar">
-                <h1>🔍 Grafana Scanner</h1>
-                <a href="/">Dashboard</a>
-                <a href="/targets" class="active">Targets</a>
-                <a href="/vulnerabilities">Vulnerabilities</a>
+                <h1><span>🛡️</span> Grafana Scanner </h1>
+                <a href="/">📊 Dashboard</a>
+                <a href="/targets" class="active">🎯 Targets</a>
+                <a href="/vulnerabilities">⚠️ Vulns DB</a>
+                <div style="margin-left: auto; font-size: 0.8rem; opacity: 0.7;">👋 hey, security hero</div>
             </div>
             <div class="container">
-                <h2>🎯 Tracked Targets ({{ targets|length }})</h2>
+                <div class="insight-message">
+                    <span>🗂️</span>
+                    <span>Here are all your monitored Grafana instances. Click on any URL to inspect details.</span>
+                </div>
+                <div class="section-title">
+                    <span>🎯📋</span> Tracked targets
+                    <span style="font-size: 0.8rem; background: #2a1c2e; padding: 2px 12px; border-radius: 30px;">{{ targets|length }} total</span>
+                </div>
+                <div class="subhead">🔍 last seen, vulnerabilities & risk score per asset</div>
                 {% if targets %}
-                <table>
-                    <thead><tr><th>URL</th><th>Version</th><th>First Seen</th><th>Last Scanned</th><th>Scans</th><th>Open Vulns</th><th>Risk Score</th></tr></thead>
-                    <tbody>
-                    {% for t in targets %}
-                    <tr>
-                        <td><a href="{{ t.get('url', '') }}" target="_blank">{{ t.get('url', '')[:60] }}...</a></td>
-                        <td>{% if t.get('version') %}v{{ t.get('version') }}{% else %}<span style="color:#555">-</span>{% endif %}</td>
-                        <td><small>{{ t.get('first_seen', '')[:10] }}</small></td>
-                        <td><small>{{ t.get('last_scanned', '')[:10] }}</small></td>
-                        <td>{{ t.get('scan_count', 0) }}</td>
-                        <td>
-                            {% set tv = t.get('total_vulnerabilities', 0) %}
-                            <span {% if tv > 0 %}style="color:#dc3545;font-weight:bold"{% endif %}>{{ tv }}</span>
-                            {% if t.get('critical_count', 0) > 0 %}<span class="badge" style="background:#dc3545;color:#fff">C:{{ t.get('critical_count') }}</span>{% endif %}
-                            {% if t.get('high_count', 0) > 0 %}<span class="badge" style="background:#fd7e14">H:{{ t.get('high_count') }}</span>{% endif %}
-                        </td>
-                        <td>
-                            <div style="display:flex;align-items:center;gap:8px;">
-                                <span>{{ t.get('risk_score', 0) }}/100</span>
-                                <div class="risk-bar" style="flex:1;">
-                                    {% set score = t.get('risk_score', 0) %}
-                                    <div class="risk-fill {% if score >= 50 %}risk-high{% elif score >= 20 %}risk-medium{% else %}risk-low{% endif %}" style="width:{{ score }}%;"></div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>🌍 Target URL</th><th>📦 Version</th><th>📅 First seen</th><th>🕒 Last scan</th><th>🔄 Scans</th><th>⚠️ Open Vulns</th><th>📈 Risk score</th></tr>
+                        </thead>
+                        <tbody>
+                        {% for t in targets %}
+                        <tr>
+                            <td><a href="{{ t.get('url', '') }}" target="_blank">🗺️ {{ t.get('url', '')[:55] }}{% if t.get('url', '')|length > 55 %}..{% endif %}</a></td>
+                            <td>{% if t.get('version') %}📌 v{{ t.get('version') }}{% else %}❓ unknown{% endif %}</td>
+                            <td><small>{{ t.get('first_seen', '')[:10] }}</small></td>
+                            <td><small>{{ t.get('last_scanned', '')[:10] }}</small></td>
+                            <td>{{ t.get('scan_count', 0) }} 🧪</td>
+                            <td>
+                                {% set tv = t.get('total_vulnerabilities', 0) %}
+                                <span {% if tv > 0 %}style="color:#ff7676;font-weight:bold"{% endif %}>{{ tv }} {% if tv > 0 %}🔥{% else %}✅{% endif %}</span>
+                                {% if t.get('critical_count', 0) > 0 %}<span class="badge badge-critical">💀 C:{{ t.get('critical_count') }}</span>{% endif %}
+                                {% if t.get('high_count', 0) > 0 %}<span class="badge badge-high">⚠️ H:{{ t.get('high_count') }}</span>{% endif %}
+                            </td>
+                            <td>
+                                <div class="risk-meta">
+                                    <span style="min-width: 45px; font-weight:600;">{{ t.get('risk_score', 0) }}</span>
+                                    <div class="risk-bar">
+                                        {% set score = t.get('risk_score', 0) %}
+                                        <div class="risk-fill {% if score >= 50 %}risk-high{% elif score >= 20 %}risk-medium{% else %}risk-low{% endif %}" style="width: {{ score }}%;"></div>
+                                    </div>
+                                    <span style="font-size:0.7rem;">
+                                        {% if score >= 70 %}⚠️ critical risk
+                                        {% elif score >= 40 %}🧨 notable risk
+                                        {% elif score >= 15 %}⚡ moderate
+                                        {% else %}🍃 low risk
+                                        {% endif %}
+                                    </span>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 {% else %}
                 <div class="empty-state">
-                    <h3>No targets tracked yet</h3>
-                    <p>Run a scan with `--db vulndb.json` to start tracking targets.</p>
+                    <h3>📭 No targets in radar yet</h3>
+                    <p>Run a scan with <code>--db vulndb.json</code> and start monitoring your Grafana instances ✨</p>
                 </div>
                 {% endif %}
+                <div class="insight-message" style="background: #16172a; border-left-color: #5e8aff; margin-top: 1rem;">
+                    <span>💡🧠</span>
+                    <div><strong>Pro tip:</strong> Targets with “Critical” or “High” badges need immediate attention. Use the Dashboard to fix vulnerabilities or mark false positives.</div>
+                </div>
             </div>
         </body>
         </html>
@@ -2800,93 +3223,177 @@ def create_web_server(scanner: GrafanaFinalScanner, host: str = '127.0.0.1', por
         """Vulnerability management page"""
         vulns = scanner.vulndb.get_all_vulnerabilities() if scanner.vulndb else []
         return render_template_string('''
-        <!DOCTYPE html>
+                <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Grafana Scanner - Vulnerabilities</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+            <title>⚠️ Grafana Scanner - Vulnerability </title>
             <style>
                 * { margin: 0; padding: 0; box-sizing: border-box; }
-                body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0a14; color: #e0e0e0; }
-                .navbar { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 15px 30px; display: flex; align-items: center; gap: 20px; border-bottom: 1px solid #2a2a4a; }
-                .navbar h1 { color: #ff4444; font-size: 20px; }
-                .navbar a { color: #888; text-decoration: none; padding: 5px 12px; border-radius: 5px; }
-                .navbar a:hover, .navbar a.active { background: #2a2a4a; color: #fff; }
-                .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
-                h2 { color: #ccc; margin: 20px 0; font-size: 18px; }
-                .filters { display: flex; gap: 10px; margin-bottom: 20px; }
-                .filters select, .filters input { background: #1a1a2e; color: #e0e0e0; border: 1px solid #2a2a4a; padding: 8px 12px; border-radius: 5px; }
-                table { width: 100%; border-collapse: collapse; background: #1a1a2e; border-radius: 8px; overflow: hidden; border: 1px solid #2a2a4a; }
-                th, td { padding: 10px 15px; text-align: left; border-bottom: 1px solid #2a2a4a; }
-                th { background: #16213e; color: #888; font-size: 12px; text-transform: uppercase; }
-                tr:hover { background: #1f1f35; }
-                a { color: #0dcaf0; text-decoration: none; }
-                .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; color: #000; }
-                .severity-critical { background: #dc3545; }
-                .severity-high { background: #fd7e14; }
-                .severity-medium { background: #ffc107; }
-                .severity-low { background: #0dcaf0; }
-                .status-open { background: #dc3545; color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
-                .status-fixed { background: #28a745; color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
-                .status-false_positive { background: #ffc107; color: #000; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
-                .btn { padding: 3px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; }
-                .btn-fix { background: #28a745; color: #fff; }
-                .btn-fp { background: #ffc107; color: #000; }
-                .btn-accept { background: #6c757d; color: #fff; }
-                .empty-state { text-align: center; padding: 40px; color: #555; }
+                body { background: radial-gradient(circle at 10% 20%, #0c0c18, #070710); font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, 'SF Pro Text', 'Roboto', sans-serif; color: #eef2ff; line-height: 1.5; padding-bottom: 2rem; }
+                ::-webkit-scrollbar { width: 8px; height: 8px; }
+                ::-webkit-scrollbar-track { background: #1e1e2c; border-radius: 10px; }
+                ::-webkit-scrollbar-thumb { background: #4a4a6a; border-radius: 10px; }
+                ::-webkit-scrollbar-thumb:hover { background: #6c6c96; }
+                .navbar { background: rgba(18, 18, 30, 0.85); backdrop-filter: blur(10px); padding: 0.9rem 2rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; border-bottom: 1px solid rgba(88, 88, 140, 0.3); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+                .navbar h1 { font-size: 1.65rem; font-weight: 700; background: linear-gradient(130deg, #ff7b7b, #ff3a3a); background-clip: text; -webkit-background-clip: text; color: transparent; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px; }
+                .navbar a { color: #b9c3e6; text-decoration: none; padding: 8px 16px; border-radius: 40px; font-weight: 500; transition: all 0.2s ease; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; }
+                .navbar a:hover, .navbar a.active { background: #2e2a4a; color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+                .navbar a.active { background: #3c2e5e; border: 1px solid #a970ff50; }
+                .container { max-width: 1400px; margin: 1.8rem auto 0 auto; padding: 0 1.8rem; }
+                .section-title { font-size: 1.6rem; font-weight: 600; margin: 1rem 0 1.2rem 0; display: flex; align-items: center; gap: 12px; border-left: 5px solid #ff6a5c; padding-left: 1rem; }
+                .subhead { color: #9ba7df; margin: -0.5rem 0 1.5rem 0; font-size: 0.9rem; }
+                .filters { display: flex; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+                .filters select, .filters input { background: #1e1f36; color: #eef2ff; border: 1px solid #3a3c60; padding: 8px 14px; border-radius: 40px; font-size: 0.85rem; cursor: pointer; }
+                .table-wrapper { overflow-x: auto; border-radius: 20px; background: #11121e; border: 1px solid #2a2b40; margin-bottom: 2rem; box-shadow: 0 6px 14px rgba(0,0,0,0.3); }
+                table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+                th { text-align: left; padding: 14px 16px; background: #16172b; color: #cdd6ff; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 1px solid #2f314e; }
+                td { padding: 12px 16px; border-bottom: 1px solid #23243e; vertical-align: middle; }
+                tr:last-child td { border-bottom: none; }
+                tr:hover td { background: #1c1d36; transition: 0.1s; }
+                .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 40px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; background: #1e1f38; color: white; }
+                .severity-critical { background: #bc2f3e; box-shadow: 0 0 6px #ff4d6d; }
+                .severity-high { background: #e67e22; }
+                .severity-medium { background: #e9b741; color: #1f1f2a; }
+                .severity-low { background: #3c91e6; }
+                .status-open { background: #bc2f3e; color: #fff; padding: 4px 10px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+                .status-fixed { background: #2b7a3e; color: #fff; padding: 4px 10px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+                .status-false_positive { background: #b9772e; color: #fff; padding: 4px 10px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+                .status-accepted { background: #6c757d; color: #fff; padding: 4px 10px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+                .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+                .btn { padding: 6px 12px; border: none; border-radius: 40px; font-size: 0.7rem; font-weight: 600; cursor: pointer; transition: 0.15s; display: inline-flex; align-items: center; gap: 6px; background: #2a2c48; color: #f0f3ff; }
+                .btn-fix { background: #2b7a3e; }
+                .btn-fix:hover { background: #3e9a57; transform: scale(0.96); }
+                .btn-fp { background: #b9772e; }
+                .btn-fp:hover { background: #da9246; transform: scale(0.96); }
+                .btn-accept { background: #6c757d; }
+                .btn-accept:hover { background: #8a96a3; transform: scale(0.96); }
+                .btn-reopen { background: #2a2c48; }
+                .btn-reopen:hover { background: #4a4d74; transform: scale(0.96); }
+                a { color: #8eaeff; text-decoration: none; }
+                a:hover { text-decoration: underline; color: #b7ceff; }
+                code { background: #00000040; padding: 2px 8px; border-radius: 30px; font-size: 0.8rem; }
+                .empty-state { text-align: center; padding: 3rem 1.5rem; background: #10111e; border-radius: 32px; margin: 1rem 0; border: 1px dashed #4a4d74; }
+                .empty-state h3 { font-size: 1.4rem; margin-bottom: 8px; }
+                .empty-state p { color: #96a0d0; }
+                .insight-message { background: #1d1e30; border-radius: 28px; padding: 0.8rem 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 12px; border-left: 6px solid #ff9f4a; font-size: 0.9rem; }
+                @media (max-width: 700px) { .container { padding: 0 1rem; } .navbar h1 { font-size: 1.3rem; } }
             </style>
         </head>
         <body>
             <div class="navbar">
-                <h1>🔍 Grafana Scanner</h1>
-                <a href="/">Dashboard</a>
-                <a href="/targets">Targets</a>
-                <a href="/vulnerabilities" class="active">Vulnerabilities</a>
+                <h1><span>🛡️</span> Grafana Scanner </h1>
+                <a href="/">📊 Dashboard</a>
+                <a href="/targets">🎯 Targets</a>
+                <a href="/vulnerabilities" class="active">⚠️ Vulns DB</a>
+                <div style="margin-left: auto; font-size: 0.8rem; opacity: 0.7;">👋 hey, security hero</div>
             </div>
             <div class="container">
-                <h2>📋 All Vulnerabilities ({{ vulns|length }})</h2>
+                <div class="insight-message">
+                    <span>🗄️</span>
+                    <span>Full list of discovered vulnerabilities. Filter by severity or status, then take action.</span>
+                </div>
+                <div class="section-title">
+                    <span>📋⚠️</span> Vulnerability registry
+                    <span style="font-size: 0.8rem; background: #2a1c2e; padding: 2px 12px; border-radius: 30px;">{{ vulns|length }} total</span>
+                </div>
+                <div class="subhead">🔍 track, triage, and manage every finding</div>
+                <div class="filters">
+                    <select id="severityFilter" onchange="filterTable()">
+                        <option value="all">🔽 All severities</option>
+                        <option value="CRITICAL">🔥 Critical</option>
+                        <option value="HIGH">🟠 High</option>
+                        <option value="MEDIUM">🟡 Medium</option>
+                        <option value="LOW">🔵 Low</option>
+                    </select>
+                    <select id="statusFilter" onchange="filterTable()">
+                        <option value="all">📌 All statuses</option>
+                        <option value="open">⚠️ Open</option>
+                        <option value="fixed">✅ Fixed</option>
+                        <option value="false_positive">❌ False Positive</option>
+                        <option value="accepted">📝 Accepted risk</option>
+                    </select>
+                    <input type="text" id="searchInput" placeholder="🔎 Search by CVE or target..." onkeyup="filterTable()">
+                </div>
                 {% if vulns %}
-                <table>
-                    <thead><tr><th>Target</th><th>CVE ID</th><th>Severity</th><th>Status</th><th>Discovered</th><th>Actions</th></tr></thead>
-                    <tbody>
-                    {% for v in vulns %}
-                    <tr>
-                        <td><a href="{{ v.get('target_url', '') }}" target="_blank">{{ v.get('target_url', '')[:50] }}...</a></td>
-                        <td><code>{{ v.get('cve_id', '') }}</code></td>
-                        <td><span class="badge severity-{{ v.get('severity', 'low').lower() }}">{{ v.get('severity', 'LOW') }}</span></td>
-                        <td><span class="status-{{ v.get('status', 'open') }}">{{ v.get('status', 'open') }}</span></td>
-                        <td><small>{{ v.get('discovered', '')[:10] }}</small></td>
-                        <td>
-                            {% if v.get('status') == 'open' %}
-                            <button class="btn btn-fix" onclick="updateStatus('{{ v.get('id', '') }}', 'fixed')">✓ Fixed</button>
-                            <button class="btn btn-fp" onclick="updateStatus('{{ v.get('id', '') }}', 'false_positive')">FP</button>
-                            <button class="btn btn-accept" onclick="updateStatus('{{ v.get('id', '') }}', 'accepted')">Accept</button>
-                            {% else %}
-                            <button class="btn btn-fix" onclick="updateStatus('{{ v.get('id', '') }}', 'open')">Reopen</button>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table id="vulnTable">
+                        <thead>
+                            <tr><th>🎯 Target</th><th>🔖 CVE ID</th><th>💥 Severity</th><th>📌 Status</th><th>📅 Discovered</th><th>🛠️ Actions</th></tr>
+                        </thead>
+                        <tbody>
+                        {% for v in vulns %}
+                        <tr class="vuln-row" data-severity="{{ v.get('severity', 'LOW') }}" data-status="{{ v.get('status', 'open') }}" data-cve="{{ v.get('cve_id', '') }}" data-target="{{ v.get('target_url', '') }}">
+                            <td><a href="{{ v.get('target_url', '') }}" target="_blank">🌐 {{ v.get('target_url', '')[:50] }}{% if v.get('target_url', '')|length > 50 %}..{% endif %}</a></td>
+                            <td><code>{{ v.get('cve_id', 'N/A') }}</code></td>
+                            <td><span class="badge severity-{{ v.get('severity', 'low').lower() }}">{% if v.get('severity') == 'CRITICAL' %}🔥{% elif v.get('severity') == 'HIGH' %}⚠️{% elif v.get('severity') == 'MEDIUM' %}🟡{% else %}🔵{% endif %} {{ v.get('severity', 'LOW') }}</span></td>
+                            <td>
+                                <span class="status-{{ v.get('status', 'open') }}">
+                                    {% if v.get('status') == 'open' %}⚠️ Open
+                                    {% elif v.get('status') == 'fixed' %}✅ Fixed
+                                    {% elif v.get('status') == 'false_positive' %}❌ False Positive
+                                    {% elif v.get('status') == 'accepted' %}📝 Accepted
+                                    {% else %}{{ v.get('status') }}{% endif %}
+                                </span>
+                            </td>
+                            <td><small>{{ v.get('discovered', '')[:10] }}</small></td>
+                            <td>
+                                <div class="actions">
+                                    {% if v.get('status') == 'open' %}
+                                    <button class="btn btn-fix" onclick="updateStatus('{{ v.get('id', '') }}', 'fixed')">✅ Mark Fixed</button>
+                                    <button class="btn btn-fp" onclick="updateStatus('{{ v.get('id', '') }}', 'false_positive')">❌ False Positive</button>
+                                    <button class="btn btn-accept" onclick="updateStatus('{{ v.get('id', '') }}', 'accepted')">📝 Accept Risk</button>
+                                    {% else %}
+                                    <button class="btn btn-reopen" onclick="updateStatus('{{ v.get('id', '') }}', 'open')">🔄 Reopen</button>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 {% else %}
                 <div class="empty-state">
                     <h3>✅ No vulnerabilities recorded</h3>
                     <p>Run a scan to populate the vulnerability database.</p>
                 </div>
                 {% endif %}
+                <div class="insight-message" style="background: #16172a; border-left-color: #5e8aff; margin-top: 1rem;">
+                    <span>🧠💡</span>
+                    <div><strong>Pro tip:</strong> Use filters to focus on critical or open issues. Mark fixed vulnerabilities to clean up your backlog, or accept risk when mitigation isn't planned.</div>
+                </div>
             </div>
             <script>
-            function updateStatus(vulnId, status) {
-                fetch('/api/vulnerabilities/' + vulnId + '/status', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({status: status})
-                }).then(r => r.json()).then(d => {
-                    if(d.success) location.reload();
-                });
-            }
+                function updateStatus(vulnId, status) {
+                    if (!vulnId) return;
+                    fetch('/api/vulnerabilities/' + vulnId + '/status', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ status: status })
+                    })
+                    .then(r => r.json())
+                    .then(d => { if (d.success) location.reload(); })
+                    .catch(() => setTimeout(() => location.reload(), 800));
+                }
+                function filterTable() {
+                    const severity = document.getElementById('severityFilter').value;
+                    const status = document.getElementById('statusFilter').value;
+                    const search = document.getElementById('searchInput').value.toLowerCase();
+                    const rows = document.querySelectorAll('.vuln-row');
+                    rows.forEach(row => {
+                        let show = true;
+                        const rowSeverity = row.getAttribute('data-severity');
+                        const rowStatus = row.getAttribute('data-status');
+                        const rowCve = row.getAttribute('data-cve').toLowerCase();
+                        const rowTarget = row.getAttribute('data-target').toLowerCase();
+                        if (severity !== 'all' && rowSeverity !== severity) show = false;
+                        if (status !== 'all' && rowStatus !== status) show = false;
+                        if (search && !rowCve.includes(search) && !rowTarget.includes(search)) show = false;
+                        row.style.display = show ? '' : 'none';
+                    });
+                }
             </script>
         </body>
         </html>
@@ -3108,7 +3615,5 @@ def main():
             import traceback
             traceback.print_exc()
         sys.exit(1)
-
-
 if __name__ == '__main__':
     main()
