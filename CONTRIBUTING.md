@@ -271,7 +271,13 @@ Every contribution matters, and we want to celebrate that. Contributors will be:
 
 </br>
 
-Thank you again for helping make Grafana Final Scanner better. Your time and effort are genuinely appreciated.
+## Credits
+
+**Checkout all these people helped this repo out:**
+
+[![GitHub contributors](https://contrib.rocks/image?repo=amirrezafatemi/Grafana-Final-Scanner)](https://github.com/amirrezafatemi/Grafana-Final-Scanner/graphs/contributors)
+
+**Thank you again for helping make Grafana Final Scanner better. Your time and effort are genuinely appreciated. ❤️**
 
 ---
 
