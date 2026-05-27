@@ -310,7 +310,9 @@ Features:
 
 ## Screenshots
 
-Below are three screenshots showing the tool in action:
+**Below are three screenshots showing the tool in action:**
+
+</br>
 
 ![Alt text of the image](https://github.com/amirrezafatemi/Grafana-Final-Scanner/blob/main/assets/dashboard_page.jpg)
 Figure 1: The main dashboard of the Grafana Final Scanner web interface
