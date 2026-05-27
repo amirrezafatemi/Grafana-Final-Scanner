@@ -312,13 +312,13 @@ Features:
 
 Below are three screenshots showing the tool in action:
 
-![Alt text of the image](https://github.com/amirrezafatemi/Grafana-Final-Scanner/assets/dashboard_page.jpg)
+![Alt text of the image](https://github.com/amirrezafatemi/Grafana-Final-Scanner/blob/main/assets/dashboard_page.jpg)
 Figure 1: The main dashboard of the Grafana Final Scanner web interface
 
-![Alt text of the image](https://github.com/amirrezafatemi/Grafana-Final-Scanner/assets/target_page.jpg)
+![Alt text of the image](https://github.com/amirrezafatemi/Grafana-Final-Scanner/blob/main/assets/target_page.jpg)
 Figure 2: Detailed vulnerability list with their risk score per asset
 
-![Alt text of the image](https://github.com/amirrezafatemi/Grafana-Final-Scanner/assets/vulnerability_page.jpg)
+![Alt text of the image](https://github.com/amirrezafatemi/Grafana-Final-Scanner/blob/main/assets/vulnerability_page.jpg)
 Figure 3: The vulnerability management page, showing a filterable table of all discovered vulnerabilities
 
 </br>
