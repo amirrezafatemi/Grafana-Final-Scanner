@@ -19,6 +19,28 @@ If you are unsure whether you have authorization to scan a target, **DO NOT USE 
 
 </br>
 
+## Table of Contents
+
+- [Executive Summary](#executive-summary)
+- [Key Features](#key-features)
+- [Installation](#installation)
+  - [Quick Start](#quick-start)
+  - [For Web Dashboard](#for-web-dashboard)
+- [Usage](#usage)
+  - [Basic Commands](#basic-commands)
+  - [Command-Line Options](#command-line-options)
+  - [New Features in Detail](#new-features-in-detail)
+- [Vulnerability Database](#vulnerability-database)
+- [Sample Output](#sample-output)
+- [Screenshots](#screenshots)
+- [Technical Methodology](#technical-methodology)
+- [Docker Usage](#docker-usage)
+- [Contributing](#contributing)
+- [Credits](#credits)
+- [License](#license)
+
+</br>
+
 ## Key Features
 
 ### Core Capabilities
@@ -286,6 +308,21 @@ Features:
 
 </br>
 
+## Screenshots
+
+Below are three screenshots showing the tool in action:
+
+![Alt text of the image](https://github.com/amirrezafatemi/Grafana-Final-Scanner/assets/dashboard_page.jpg)
+Figure 1: The main dashboard of the Grafana Final Scanner web interface
+
+![Alt text of the image](https://github.com/amirrezafatemi/Grafana-Final-Scanner/assets/target_page.jpg)
+Figure 2: Detailed vulnerability list with their risk score per asset
+
+![Alt text of the image](https://github.com/amirrezafatemi/Grafana-Final-Scanner/assets/vulnerability_page.jpg)
+Figure 3: The vulnerability management page, showing a filterable table of all discovered vulnerabilities
+
+</br>
+
 ## Technical Methodology
 
 ### Scanning Process
@@ -361,12 +398,32 @@ docker run --rm -p 8080:8080 -v $(pwd)/vulndb.json:/app/vulndb.json grafana-scan
 
 ## Contributing
 
-Contributions welcome! Submit pull requests with:
-- New CVE detection modules
-- False positive fixes
-- Documentation improvements
-- Test cases
-- UI improvements for the web dashboard
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for the full contribution workflow, including:
+
+- Reporting bugs and suggesting enhancements
+- Local development setup and test guidance
+- Branching strategy and commit message conventions
+- Pull request expectations and review checklist
+
+We especially appreciate contributions in these areas:
+
+- New CVE detection modules and vulnerability coverage
+- False positive / false negative fixes
+- Documentation updates and examples
+- Test cases and reliability improvements
+- Web dashboard UI and usability enhancements
+
+Follow the steps in [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+
+</br>
+
+## Credits
+
+**Check out all these people who helped this repo:**
+
+[![GitHub contributors](https://contrib.rocks/image?repo=amirrezafatemi/Grafana-Final-Scanner)](https://github.com/amirrezafatemi/Grafana-Final-Scanner/graphs/contributors)
+
+**Thank you again for helping make Grafana Final Scanner better. Your time and effort are genuinely appreciated. ❤️**
 
 </br>
 

@@ -332,16 +332,6 @@ Every contribution matters. Contributors will be:
 - Mentioned in release notes for significant changes
 - Recognized in the repository's GitHub Insights
 
-</br>
-
-## Credits
-
-**Check out all these people who helped this repo:**
-
-[![GitHub contributors](https://contrib.rocks/image?repo=amirrezafatemi/Grafana-Final-Scanner)](https://github.com/amirrezafatemi/Grafana-Final-Scanner/graphs/contributors)
-
-**Thank you again for helping make Grafana Final Scanner better. Your time and effort are genuinely appreciated. ❤️**
-
 ---
 
 _<p align=center>This guide is inspired by the best practices of the open source community. Questions or suggestions for improving it? Open an issue!</p>_
