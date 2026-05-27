@@ -2,7 +2,7 @@
 
 All notable changes to the Grafana Final Scanner project will be documented in this file.
 
-## [2.0.0] - 2025-02-17
+## [2.0.0] - 2026-05-15
 
 ### Added
 - **New CVE Checks (3 additional):**
@@ -66,7 +66,7 @@ All notable changes to the Grafana Final Scanner project will be documented in t
 - Implemented connection retry with exponential backoff
 - Safe request wrapper prevents crashes on network failures
 
-## [1.0.0] - 2025-01-15
+## [1.0.0] - 2026-01-15
 
 ### Added
 - Initial release with 10 CVE vulnerability checks
