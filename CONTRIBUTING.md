@@ -312,15 +312,6 @@ Instead, follow responsible disclosure:
 > [!important]
 > As stated in the README, this tool is only for authorized security assessments. **Never use it against systems you do not own or lack explicit permission to test.**
 
-</br>
-
-## Getting Help
-
-Stuck? Have questions?
-
-- **Open an issue** for bugs, feature requests, or questions
-- **Comment on an existing issue** (Many hands make light work)
-- **Check the [README](https://github.com/amirrezafatemi/Grafana-Final-Scanner/blob/main/README.md)** – It contains detailed usage information
 
 </br>
 
